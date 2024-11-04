@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:keychaintest/storage_manager.dart';
+import 'env/env.dart';
 
 class SecureStorageSide extends StatefulWidget {
   const SecureStorageSide({super.key});
@@ -26,7 +27,7 @@ class _SecureStorageSideState extends State<SecureStorageSide> {
     await Future.delayed(Duration(
         milliseconds: (Random().nextDouble() * 2000).toInt())); // あえて遅延ぽいのをやってる
     var tmpCount =
-        await _manager.getSecureStorageValue(key: "secstorage_count") ?? "0";
+        await _manager.getSecureStorageValue(key: Env.seccount) ?? "0";
     _count = int.tryParse(tmpCount) ?? 0;
 
     setState(() {
@@ -38,13 +39,13 @@ class _SecureStorageSideState extends State<SecureStorageSide> {
     setState(() {
       _count++;
       _manager.setSecureStorageValue(
-          key: "secstorage_count", value: _count.toString());
+          key: Env.seccount, value: _count.toString());
     });
   }
 
   void _deleteCounter() {
     setState(() {
-      _manager.deleteSecureStorageValue(key: "secstorage_count");
+      _manager.deleteSecureStorageValue(key: Env.seccount);
       _count = 0;
     });
   }

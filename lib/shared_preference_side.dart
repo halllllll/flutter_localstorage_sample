@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:keychaintest/storage_manager.dart';
+import 'env/env.dart';
 
 class SharedPreferenceSide extends StatefulWidget {
   const SharedPreferenceSide({super.key});
@@ -26,7 +27,7 @@ class _SharedPreferenceSideState extends State<SharedPreferenceSide> {
     await Future.delayed(Duration(
         milliseconds: (Random().nextDouble() * 2000).toInt())); // あえて遅延ぽいのをやってる
     setState(() {
-      _count = _manager.getSharedPrefIntValue(key: "prefs_count") ?? 0;
+      _count = _manager.getSharedPrefIntValue(key: Env.prefcount) ?? 0;
       _isInitialized = true;
     });
   }
@@ -34,13 +35,13 @@ class _SharedPreferenceSideState extends State<SharedPreferenceSide> {
   void _incrementCounter() {
     setState(() {
       _count++;
-      _manager.setSharedPrefIntValue(key: "prefs_count", value: _count);
+      _manager.setSharedPrefIntValue(key: Env.prefcount, value: _count);
     });
   }
 
   void _deleteCounter() {
     setState(() {
-      _manager.deleteSharedPrefValue("prefs_count");
+      _manager.deleteSharedPrefValue(Env.prefcount);
       _count = 0;
     });
   }
